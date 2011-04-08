@@ -1,3 +1,4 @@
+MANIFEST.in
 README.txt
 setup.cfg
 setup.py
@@ -8,6 +9,10 @@ cellml.simulator.egg-info/dependency_links.txt
 cellml.simulator.egg-info/entry_points.txt
 cellml.simulator.egg-info/namespace_packages.txt
 cellml.simulator.egg-info/not-zip-safe
+cellml.simulator.egg-info/paster_plugins.txt
 cellml.simulator.egg-info/requires.txt
 cellml.simulator.egg-info/top_level.txt
 cellml/simulator/__init__.py
+cellml/simulator/browser.py
+cellml/simulator/layout.py
+docs/HISTORY.txt
