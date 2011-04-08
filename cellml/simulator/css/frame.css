@@ -1,0 +1,12 @@
+#cellml_simulator,
+#cellml_simulator iframe {
+    width: 100%;
+}
+
+#cellml_simulator {
+    height: 600px;
+}
+
+#cellml_simulator iframe {
+    height: 100%;
+}

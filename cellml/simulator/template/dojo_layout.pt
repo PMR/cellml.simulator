@@ -1,0 +1,128 @@
+<metal:block use-macro="here/global_defines/macros/defines" />
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      metal:use-macro="context/main_template/macros/master">
+
+<metal:slot metal:fill-slot="style_slot" 
+    i18n:domain="cellml.simulator">
+
+  <style type="text/css" 
+      tal:content="
+          string:@import url($portal_url/++resource++cellml.simulator.js/dojo/dojo/resources/dojo.css);
+          string:@import url($portal_url/++resource++cellml.simulator.js/dojo/dijit/themes/tundra/tundra.css);
+          string:@import url($portal_url/++resource++cellml.simulator.css/andre.css);
+          ">
+      @import "js/dojo/dojo/resources/dojo.css";
+      @import "js/dojo/dijit/themes/tundra/tundra.css";
+      @import "andre.css";
+  </style>
+
+</metal:slot>
+
+<metal:slot metal:fill-slot="javascript_head_slot" 
+    i18n:domain="cellml.simulator">
+
+    <script type="text/javascript">
+      djConfig = {
+        parseOnLoad: true,
+        isDebug: false
+      };
+    </script>
+    <script type="text/javascript" src="js/dojo/dojo/dojo.js"></script>
+    <style> 
+      /* NOTE: for a full screen layout, must set body size equal to 
+         the viewport. */
+      html, body { height: 100%; width: 100%; margin: 0; padding: 0; }
+    </style>
+    <script type="text/javascript">
+      dojo.require("dojo.parser");
+      dojo.require("dijit.layout.ContentPane");
+      dojo.require("dijit.layout.BorderContainer");
+      // for the help dialog
+      dojo.require("dijit.Dialog");
+      /* my code */
+      // relative to dojoroot/dojo
+      dojo.registerModulePath("andre","../../andre");
+      dojo.require("andre.DataStore");
+      dojo.require("andre.ReferenceDescription");
+    </script>
+    <script type="text/javascript">
+      /* declare our data store, initialised on page load */
+      var store = null;
+      /* FIXME: source directory for reference description - should by dynamic */
+      var srcBaseURL = "http://localhost/test/dojo-presentation/HH-reference-description/";
+      /* and the primary document we're creating */
+      var referenceDescription = null;
+      function rootItemFetched(item,request) {
+        console.debug("rootItemFetched() called");
+        if (referenceDescription != null) {
+          alert("Reference description already created, not creating again");
+        } else {
+          // create the reference description object
+          referenceDescription = new andre.ReferenceDescription(store,item, dojo.byId("header-pane"), dojo.byId("task-pane"), dojo.byId("content-pane"), dojo.byId("footer-pane"), srcBaseURL);
+          console.log("reference description created");
+          // set up the page
+          referenceDescription.initialiseDocument();
+          console.log("document initialised");
+        }
+      }
+      function gotError(error,request) {
+        dojo.byId('loaderInner').innerHTML += " ERROR: The request to the data store failed getting the root item: " + error;
+      }
+      function pageInitComplete(items,request) {
+        console.debug("pageInitComplete() called");
+        if (referenceDescription == null) {
+          dojo.byId('loaderInner').innerHTML += " ERROR: missing reference description?";
+        } else {
+          /* redo the page layout -- need to do this to ensure the blocks all get the right size and are visible */
+          dijit.byId("page-layout").layout();
+          // and the cool little page loader FIXME: should replace with a proper progress bar as the page loads...
+          dojo.byId('loaderInner').innerHTML += " done.";
+          setTimeout(function hideLoader(){
+            var loader = dojo.byId('loader');
+            dojo.fadeOut({ node: loader, duration: 500,
+              onEnd: function(){ 
+                loader.style.display = "none"; 
+              }
+            }).play();
+          }, 250);
+        }
+      }
+      function pageInit() {
+        console.debug("pageInit() called");
+        /* load up our date store */
+        store = new andre.DataStore({
+          /*url: "HH-generated.json",*/
+          url: srcBaseURL + "reference-description.json",
+          mimetype: "text/json"
+        });
+        // get the root object from the store
+        store.fetch({
+          query: {type: "root"},
+          onItem: rootItemFetched,
+          onError: gotError,
+          onComplete: pageInitComplete
+        });
+      }
+      // called from within content items to pop up other content items
+      // FIXME: should really be hidden away within the reference description object??
+      function displayContentItem(id,parentId) {
+        referenceDescription.displayContentItem(id,parentId);
+      }
+      dojo.addOnLoad(pageInit);
+    </script>
+
+</metal:slot>
+
+<body>
+
+<metal:slot metal:fill-slot="main" i18n:domain="cmf_default">
+  <div id="layout-contents">
+    <span tal:replace="structure view/contents" />
+  </div>
+</metal:slot>
+</body>
+
+</html>

@@ -1,0 +1,59 @@
+<metal:block use-macro="here/global_defines/macros/defines" />
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      metal:use-macro="context/main_template/macros/master">
+
+  <metal:slot metal:fill-slot="style_slot"
+      i18n:domain="cellml.simulator">
+
+    <style type="text/css"
+        tal:content="
+            string:@import url($portal_url/++resource++cellml.simulator.css/frame.css);
+            ">
+        @import "frame.css";
+    </style>
+
+  </metal:slot>
+  <metal:slot metal:fill-slot="javascript_head_slot"
+      i18n:domain="cellml.simulator">
+
+  <script type="text/javascript">
+  //<![CDATA[
+    function resizeMainView() {
+        var minHeight = 600;
+        var mainView = jq("#cellml_simulator");
+        var winHeight = jq(window).height();
+        var viewTop = mainView.offset().top;
+        var curHeight = mainView.outerHeight();
+        var rawHeight = winHeight - viewTop;
+        var maxHeight = Math.max(minHeight, rawHeight);
+        mainView.css('height', maxHeight);
+    };
+
+    var resizeTimer = null;
+    jq(window).bind('resize', function() {
+        if (resizeTimer) clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(resizeMainView, 100);
+    });
+
+    jq(window).bind('load', function() {
+      resizeMainView();
+    });
+
+  //]]>
+  </script>
+
+
+  </metal:slot>
+
+  <body>
+    <metal:slot metal:fill-slot="main" i18n:domain="cmf_default">
+      <div id="layout-contents">
+        <span tal:replace="structure view/contents" />
+      </div>
+    </metal:slot>
+  </body>
+
+</html>

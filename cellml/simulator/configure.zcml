@@ -1,0 +1,40 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="cellml.simulator">
+
+  <!-- Views -->
+  <adapter factory=".layout.cellml_simulator_iframe_layout_factory" />
+
+  <browser:page
+      for="pmr2.app.workspace.interfaces.IWorkspace"
+      name="cellml_simulator_full"
+      class=".browser.CellMLSimulatorFullView"
+      permission="zope2.View"
+      />
+
+  <browser:page
+      for="pmr2.app.workspace.interfaces.IWorkspace"
+      name="cellml_simulator"
+      class=".browser.CellMLSimulatorIFrameView"
+      permission="zope2.View"
+      />
+
+  <!-- Resources -->
+
+  <browser:resourceDirectory
+      name="cellml.simulator.js"
+      directory="js"
+      />
+
+  <browser:resourceDirectory
+      name="cellml.simulator.css"
+      directory="css"
+      />
+
+  <browser:resourceDirectory
+      name="cellml.simulator.icons"
+      directory="icons"
+      />
+
+</configure>

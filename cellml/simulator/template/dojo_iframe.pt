@@ -1,0 +1,4 @@
+<div id="cellml_simulator">
+<iframe tal:attributes="src view/url_expr_target">
+</iframe>
+</div>
