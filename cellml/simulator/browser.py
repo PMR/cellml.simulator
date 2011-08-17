@@ -61,3 +61,19 @@ class CellMLSimulatorIFrame(CellMLSimulatorFullView):
 
 CellMLSimulatorIFrameView = layout.wrap_form(CellMLSimulatorIFrame,
     __wrapper_class=CellMLSimulatorIFrameWrapper)
+
+
+class CellMLSimulatorIFrameLink(CellMLSimulatorFullView):
+    """\
+    The one with the site theme, embedding the full view as an iframe.
+    """
+
+    template = ViewPageTemplateFile(path('dojo_iframe_link.pt'))
+    fullview_name = 'cellml_simulator'
+
+    @property
+    def url_expr_target(self):
+        return '/'.join((self.context.absolute_url(), self.fullview_name) +
+                        tuple(self.traverse_subpath))
+
+CellMLSimulatorIFrameLinkView = layout.wrap_form(CellMLSimulatorIFrameLink)

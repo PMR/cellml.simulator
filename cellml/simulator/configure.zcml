@@ -3,6 +3,14 @@
     xmlns:browser="http://namespaces.zope.org/browser"
     i18n_domain="cellml.simulator">
 
+  <!-- custom render dictionary -->
+
+  <utility
+      provides="pmr2.app.workspace.browser.interfaces.IRendererDictionary"
+      factory=".utility.RendererDictionary"
+      name="cellml_simulator"
+      />
+
   <!-- Views -->
   <adapter factory=".layout.cellml_simulator_iframe_layout_factory" />
 
@@ -17,6 +25,13 @@
       for="pmr2.app.workspace.interfaces.IWorkspace"
       name="cellml_simulator"
       class=".browser.CellMLSimulatorIFrameView"
+      permission="zope2.View"
+      />
+
+  <browser:page
+      for="pmr2.app.workspace.interfaces.IWorkspace"
+      name="cellml_simulator_link"
+      class=".browser.CellMLSimulatorIFrameLinkView"
       permission="zope2.View"
       />
 
