@@ -1,6 +1,6 @@
 Metadata-Version: 1.0
 Name: cellml.simulator
-Version: trunkdev
+Version: trunk
 Summary: Port of the CellML Simulator to PMR2.
 Home-page: http://www.cellml.org/
 Author: Tommy Yu

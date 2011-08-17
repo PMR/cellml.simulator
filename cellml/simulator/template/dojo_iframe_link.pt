@@ -1,0 +1,3 @@
+<div id="cellml_simulator">
+<a tal:attributes="href view/url_expr_target">Launch the simulator viewer.</a>
+</div>
