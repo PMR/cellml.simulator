@@ -1,8 +1,8 @@
 Changelog
 =========
 
-trunk - Unreleased
-----------------
+0.1 - Released (2011-08-17)
+---------------------------
 
 * Initial release
 
