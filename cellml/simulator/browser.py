@@ -4,18 +4,14 @@ import zope.component
 from paste.httpexceptions import HTTPNotFound
 from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
 from zope.publisher.browser import BrowserPage
-from plone.z3cform import layout
 
-from pmr2.app.browser.layout import TraverseFormWrapper
 from pmr2.app.browser.page import TraversePage
-
-from cellml.simulator.layout import CellMLSimulatorIFrameWrapper
-
+from pmr2.app.workspace.browser.browser import BaseFilePage
 
 path = lambda p: os.path.join(os.path.dirname(__file__), 'template', p)
 
 
-class CellMLSimulatorFullView(TraversePage):
+class CellMLSimulatorFull(TraversePage):
     """\
     The source text viewer class.
     """
@@ -46,11 +42,12 @@ class CellMLSimulatorFullView(TraversePage):
         return self.template()
 
 
-class CellMLSimulatorIFrame(CellMLSimulatorFullView):
+class CellMLSimulatorIFrame(TraversePage):
     """\
     The one with the site theme, embedding the full view as an iframe.
     """
 
+    index = ViewPageTemplateFile(path('dojo_iframe_layout.pt'))
     template = ViewPageTemplateFile(path('dojo_iframe.pt'))
     fullview_name = 'cellml_simulator_full'
 
@@ -59,11 +56,8 @@ class CellMLSimulatorIFrame(CellMLSimulatorFullView):
         return '/'.join((self.context.absolute_url(), self.fullview_name) +
                         tuple(self.traverse_subpath))
 
-CellMLSimulatorIFrameView = layout.wrap_form(CellMLSimulatorIFrame,
-    __wrapper_class=CellMLSimulatorIFrameWrapper)
 
-
-class CellMLSimulatorIFrameLink(CellMLSimulatorFullView):
+class CellMLSimulatorIFrameLink(BaseFilePage):
     """\
     The one with the site theme, embedding the full view as an iframe.
     """
@@ -75,5 +69,3 @@ class CellMLSimulatorIFrameLink(CellMLSimulatorFullView):
     def url_expr_target(self):
         return '/'.join((self.context.absolute_url(), self.fullview_name) +
                         tuple(self.traverse_subpath))
-
-CellMLSimulatorIFrameLinkView = layout.wrap_form(CellMLSimulatorIFrameLink)

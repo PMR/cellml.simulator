@@ -11,27 +11,24 @@
       name="cellml_simulator"
       />
 
-  <!-- Views -->
-  <adapter factory=".layout.cellml_simulator_iframe_layout_factory" />
-
   <browser:page
       for="pmr2.app.workspace.interfaces.IWorkspace"
       name="cellml_simulator_full"
-      class=".browser.CellMLSimulatorFullView"
+      class=".browser.CellMLSimulatorFull"
       permission="zope2.View"
       />
 
   <browser:page
       for="pmr2.app.workspace.interfaces.IWorkspace"
       name="cellml_simulator"
-      class=".browser.CellMLSimulatorIFrameView"
+      class=".browser.CellMLSimulatorIFrame"
       permission="zope2.View"
       />
 
   <browser:page
       for="pmr2.app.workspace.interfaces.IWorkspace"
       name="cellml_simulator_link"
-      class=".browser.CellMLSimulatorIFrameLinkView"
+      class=".browser.CellMLSimulatorIFrameLink"
       permission="zope2.View"
       />
 

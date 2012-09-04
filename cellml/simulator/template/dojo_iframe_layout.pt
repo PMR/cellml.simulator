@@ -1,9 +1,8 @@
-<metal:block use-macro="here/global_defines/macros/defines" />
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-      metal:use-macro="context/main_template/macros/master">
+      metal:use-macro="context/@@pmr2-macros/pmr2_main">
 
   <metal:slot metal:fill-slot="style_slot"
       i18n:domain="cellml.simulator">
@@ -51,7 +50,7 @@
   <body>
     <metal:slot metal:fill-slot="main" i18n:domain="cmf_default">
       <div id="layout-contents">
-        <span tal:replace="structure view/contents" />
+        <span tal:replace="structure view/template" />
       </div>
     </metal:slot>
   </body>
