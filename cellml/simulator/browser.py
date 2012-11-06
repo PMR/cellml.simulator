@@ -5,7 +5,7 @@ from paste.httpexceptions import HTTPNotFound
 from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
 from zope.publisher.browser import BrowserPage
 
-from pmr2.app.browser.page import TraversePage
+from pmr2.z3cform.page import TraversePage
 from pmr2.app.workspace.browser.browser import BaseFilePage
 
 path = lambda p: os.path.join(os.path.dirname(__file__), 'template', p)
