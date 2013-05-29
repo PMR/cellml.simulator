@@ -2,7 +2,7 @@ import os.path
 import zope.component
 
 from paste.httpexceptions import HTTPNotFound
-from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
+from zope.browserpage.viewpagetemplatefile import ViewPageTemplateFile
 from zope.publisher.browser import BrowserPage
 
 from pmr2.z3cform.page import TraversePage
